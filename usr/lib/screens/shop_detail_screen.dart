@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:couldai_user_app/models/shop.dart';
+import 'package:couldai_user_app/screens/booking_screen.dart';
 
 class ShopDetailScreen extends StatefulWidget {
   final Shop shop;
@@ -60,6 +61,24 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
+            ),
+            const SizedBox(height: 24.0),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookingScreen(shop: widget.shop),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.calendar_today),
+                label: const Text('Book Appointment'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
             ),
             const SizedBox(height: 24.0),
             Text(
