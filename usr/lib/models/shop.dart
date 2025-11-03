@@ -4,6 +4,7 @@ class Shop {
   final String description;
   final double rating;
   final List<Review> reviews;
+  final String status; // 'pending', 'approved', 'rejected'
 
   Shop({
     required this.id,
@@ -11,6 +12,7 @@ class Shop {
     required this.description,
     required this.rating,
     required this.reviews,
+    this.status = 'pending',
   });
 }
 

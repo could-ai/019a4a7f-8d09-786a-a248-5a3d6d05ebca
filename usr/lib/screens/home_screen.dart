@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:couldai_user_app/models/shop.dart';
 import 'package:couldai_user_app/screens/shop_detail_screen.dart';
 import 'package:couldai_user_app/widgets/shop_card.dart';
+import 'package:couldai_user_app/screens/create_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,13 +12,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Dummy data for shops
-  final List<Shop> _shops = [
-    Shop(id: '1', name: 'Sharma General Store', description: 'Your everyday needs store', rating: 4.5, reviews: [Review(reviewer: 'Rahul', comment: 'Great products!', rating: 5)]),
-    Shop(id: '2', name: 'Gupta Electronics', description: 'All electronic gadgets available', rating: 4.2, reviews: [Review(reviewer: 'Priya', comment: 'Found what I was looking for.', rating: 4)]),
-    Shop(id: '3', name: 'Verma Book Depot', description: 'A wide range of books', rating: 4.8, reviews: [Review(reviewer: 'Amit', comment: 'Excellent collection of books.', rating: 5)]),
-    Shop(id: '4', name: 'Sanjay Mobiles', description: 'Latest smartphones and accessories', rating: 4.0, reviews: []),
-    Shop(id: '5', name: 'Prakash Bakery', description: 'Fresh cakes and pastries', rating: 4.7, reviews: []),
+  // Dummy data for shops, now with status
+  List<Shop> _shops = [
+    Shop(id: '1', name: 'Sharma General Store', description: 'Your everyday needs store', rating: 4.5, reviews: [Review(reviewer: 'Rahul', comment: 'Great products!', rating: 5)], status: 'approved'),
+    Shop(id: '2', name: 'Gupta Electronics', description: 'All electronic gadgets available', rating: 4.2, reviews: [Review(reviewer: 'Priya', comment: 'Found what I was looking for.', rating: 4)], status: 'approved'),
+    Shop(id: '3', name: 'Verma Book Depot', description: 'A wide range of books', rating: 4.8, reviews: [Review(reviewer: 'Amit', comment: 'Excellent collection of books.', rating: 5)], status: 'approved'),
+    Shop(id: '4', name: 'Sanjay Mobiles', description: 'Latest smartphones and accessories', rating: 4.0, reviews: [], status: 'pending'),
+    Shop(id: '5', name: 'Prakash Bakery', description: 'Fresh cakes and pastries', rating: 4.7, reviews: [], status: 'rejected'),
   ];
 
   List<Shop> _filteredShops = [];
@@ -36,6 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
       _filteredShops = _shops.where((shop) {
         return shop.name.toLowerCase().contains(query);
       }).toList();
+    });
+  }
+
+  void _addShop(Shop newShop) {
+    setState(() {
+      _shops.add(newShop);
+      _filteredShops = _shops;
     });
   }
 
@@ -92,6 +100,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateProfileScreen(onAddShop: _addShop),
+            ),
+          );
+        },
+        tooltip: 'Create Profile',
+        child: const Icon(Icons.add),
       ),
     );
   }
